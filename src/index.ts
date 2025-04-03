@@ -9,7 +9,12 @@ import fileUpload from "express-fileupload";
 
 import connectDB from "./lib/connectDB";
 import corsOptions from "./lib/corsOptions";
-// import userRouter from './routes/userRouter'
+import userRoutes from "./routes/userRoutes";
+import uploadRoutes from "./routes/uploadRoutes";
+import walletRoutes from "./routes/walletRoutes";
+import categoryRoutes from "./routes/categoryRoutes";
+import questionRoutes from "./routes/questionRoutes";
+import dashboardRoutes from "./routes/dashboardRoutes";
 
 dotenv.config();
 
@@ -30,9 +35,14 @@ app.get("/", (req, res) => {
   res.json({message: "API Working!"});
 });
 
-// app.use('/api/v1', userRouter)
+app.use("/api/v1", userRoutes);
+app.use("/api/v1", uploadRoutes);
+app.use("/api/v1", walletRoutes);
+app.use("/api/v1", categoryRoutes);
+app.use("/api/v1", questionRoutes);
+app.use("/api/v1", dashboardRoutes);
 
-mongoose.connection.once("open", () => {
+mongoose.connection.once("open", async () => {
   console.log("Database connection successful!");
 
   app.listen(PORT, () => {
