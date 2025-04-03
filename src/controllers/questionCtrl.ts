@@ -90,7 +90,7 @@ const questionCtrl = {
       });
       await newQuestion.save();
 
-      res.status(200).json(newQuestion);
+      res.status(200).json({message: "Question created successfully."});
       return;
     } catch (error: any) {
       res.status(500).json({message: error.message});
@@ -122,7 +122,7 @@ const questionCtrl = {
 
       await ques.save();
 
-      res.status(200).json(ques);
+      res.status(200).json({message: "Question updated successfully."});
       return;
     } catch (error: any) {
       res.status(500).json({message: error.message});
