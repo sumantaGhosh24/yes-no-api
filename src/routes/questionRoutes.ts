@@ -22,7 +22,7 @@ router.get("/entrys/questions/:id", authAdmin, questionCtrl.getQuestionEntrys);
 
 router.post("/entrys/user/:id", authAdmin, questionCtrl.getUserEntrys);
 
-router.get("/question/result/:id", authAdmin, questionCtrl.declareResult);
+router.post("/question/result/:id", authAdmin, questionCtrl.declareResult);
 
 router.get("/questions", auth, questionCtrl.getQuestions);
 
@@ -30,8 +30,8 @@ router.get("/question/:id", auth, questionCtrl.getQuestion);
 
 router.post("/question/:id", auth, questionCtrl.addEntry);
 
-router.post("/entry/:id", auth, questionCtrl.getEntry);
+router.get("/entry/:id", auth, questionCtrl.getEntry);
 
-router.post("/entrys", auth, questionCtrl.getMyEntrys);
+router.get("/entrys", auth, questionCtrl.getMyEntrys);
 
 export default router;
