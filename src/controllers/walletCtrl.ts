@@ -89,23 +89,27 @@ const walletCtrl = {
   },
   withdraw: async (req: IReqAuth, res: Response) => {
     try {
-      const {amount, upiId} = req.body;
+      const {amount} = req.body;
 
       if (req!.user!.amount < amount) {
         res.status(400).json({message: "Insufficient balance."});
         return;
       }
 
-      // const payoutOptions = {
-      //   account_number: upiId,
-      //   amount: Number(amount * 100),
-      //   currency: "INR",
-      //   mode: "UPI",
-      //   purpose: "payout",
-      //   queue_if_low_balance: false,
-      // };
-
-      // const payout = await instance.payouts.create(payoutOptions);
+      const newTransaction = new Transaction({
+        user: req?.user?._id,
+        amount: amount,
+        message: `${amount} INR withdrawn`,
+        status: "withdraw",
+        paymentResult: {
+          id: "orderId",
+          status: "success",
+          razorpay_order_id: "razorpayOrderId",
+          razorpay_payment_id: "razorpayPaymentId",
+          razorpay_signature: "razorpaySignature",
+        },
+      });
+      await newTransaction.save();
 
       await User.findByIdAndUpdate(req?.user?._id, {$inc: {amount: -amount}});
 
@@ -239,6 +243,13 @@ const walletCtrl = {
         amount: amount,
         message: `${amount} INR penalty deducted`,
         status: "penalty",
+        paymentResult: {
+          id: "orderId",
+          status: "success",
+          razorpay_order_id: "razorpayOrderId",
+          razorpay_payment_id: "razorpayPaymentId",
+          razorpay_signature: "razorpaySignature",
+        },
       });
       await newTransaction.save();
 

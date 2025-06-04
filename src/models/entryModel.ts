@@ -9,6 +9,7 @@ export interface IEntry extends Document {
   bet: number;
   win: number;
   result: "success" | "failed" | "pending";
+  answer?: string;
 }
 
 const entrySchema = new mongoose.Schema(
@@ -22,6 +23,7 @@ const entrySchema = new mongoose.Schema(
     bet: {type: Number, required: true},
     win: {type: Number, required: true, default: 0},
     result: {type: String, default: "pending"},
+    answer: {type: String},
   },
   {timestamps: true}
 );
